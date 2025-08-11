@@ -1,10 +1,10 @@
 // cart.js
 
 // A single, global cart array
-const cart = [];
+export const cart = [];
 
 // Add a product to the cart or update quantity if it already exists
-function addToCart(productId, quantity = 1) {
+export function addToCart(productId, quantity = 1) {
     let item = cart.find(p => p.productId === productId);
     if (item) {
         item.quanity += quantity;
@@ -15,7 +15,7 @@ function addToCart(productId, quantity = 1) {
 }
 
 // Calculate and update total cart quantity in the UI
-function updateCartQuantity() {
+export function updateCartQuantity() {
     const totalQty = cart.reduce((sum, item) => sum + item.quanity, 0);
     // .reduce(...) loops through each item in the array and accumulates a total.
     const qtyElem = document.querySelector(".js-cart-quantity");
@@ -23,7 +23,7 @@ function updateCartQuantity() {
 }
 
 // Optional: expose function to get full cart if needed elsewhere
-function getCart() {
+export function getCart() {
     return cart;
 
 }
