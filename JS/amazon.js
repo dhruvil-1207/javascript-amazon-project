@@ -52,37 +52,23 @@ products.forEach ((product) => {
         </div>
     `;
     
+    
 });
 
 document.querySelector (".js-products-grid").innerHTML = productsHTML;
 
 
-document.querySelectorAll (".js-add-to-cart")
-    .forEach ((button) => {
-        button.addEventListener ("click", () => {
-            const productId = button.dataset.productId;
-            
-            let matchingItem;
-            cart.forEach((item) => {
-                if (productId === item.productId) matchingItem = item;
+// Attach ONE event listener using event delegation
+// This works because of event bubbling — clicks on child elements bubble up to the parent.
+document.querySelector(".js-products-grid").addEventListener("click", (event) => {
+    // 1. Find the closest element with the .js-add-to-cart class that was clicked
+    const button = event.target.closest(".js-add-to-cart");
+    if (!button) return; // If not clicking an Add to Cart button, stop
 
-            });
+    // 2. Find the quantity select dropdown inside the same product's container
+    const selectElem = button.closest(".product-container").querySelector("select");
+    const quantity = selectElem ? Number(selectElem.value) : 1; // Default to 1 if missing
 
-            if (matchingItem) matchingItem.quanity++;
-            else  {
-                cart.push ({
-                    productId,
-                    quanity: 1
-                });
-            }
-            let cartQuantity = 0   ;
-            cart.forEach ((item) => {
-                cartQuantity += item.quanity;
-            });
-
-            document.querySelector (".js-cart-quantity")
-                .innerHTML = cartQuantity;
-
-
-        });
-    })
+    // 3. Call the shared cart logic function from cart.js
+    addToCart(button.dataset.productId, quantity);
+});
