@@ -1,5 +1,8 @@
 import {addToCart} from "../data/cart.js";
 import {products} from "../data/products.js";
+// import { updateCartQuantity } from '../data/cart.js';
+// updateCartQuantity(); // To show the initial cart quantity on page load
+
 // we can also do it like:
 // import {products as myProducts} from "../data/products.js";
 
