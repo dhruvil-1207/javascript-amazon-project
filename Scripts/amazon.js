@@ -63,7 +63,7 @@ products.forEach ((product) => {
 });
 
 document.querySelector (".js-products-grid").innerHTML = productsHTML;
-
+updateCartQuantity();  // to initially updatte the cart quantity (when the products are renderred)
 function updateCartQuantity() {
     const totalQty = cart.reduce((sum, item) => sum + item.quantity, 0);
     // .reduce(...) loops through each item in the array and accumulates a total.
