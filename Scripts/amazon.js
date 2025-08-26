@@ -1,7 +1,6 @@
-import {addToCart} from "../data/cart.js";
+import {addToCart, cart} from "../data/cart.js";
 import {products} from "../data/products.js";
-// import { updateCartQuantity } from '../data/cart.js';
-// updateCartQuantity(); // To show the initial cart quantity on page load
+
 
 // we can also do it like:
 // import {products as myProducts} from "../data/products.js";
@@ -65,6 +64,12 @@ products.forEach ((product) => {
 
 document.querySelector (".js-products-grid").innerHTML = productsHTML;
 
+function updateCartQuantity() {
+    const totalQty = cart.reduce((sum, item) => sum + item.quantity, 0);
+    // .reduce(...) loops through each item in the array and accumulates a total.
+    const qtyElem = document.querySelector(".js-cart-quantity");
+    if (qtyElem) qtyElem.innerHTML = totalQty;
+}
 
 // Attach ONE event listener using event delegation
 // This works because of event bubbling — clicks on child elements bubble up to the parent.
@@ -79,4 +84,5 @@ document.querySelector(".js-products-grid").addEventListener("click", (event) =>
 
     // 3. Call the shared cart logic function from cart.js
     addToCart(button.dataset.productId, quantity);
+    updateCartQuantity();
 });
