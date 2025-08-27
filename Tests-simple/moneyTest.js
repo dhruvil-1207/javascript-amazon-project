@@ -1,4 +1,4 @@
-import {formatCurrency} from "../Scripts/Utils/money.js";
+import {formatCurrency} from "../../Scripts/Utils/money.js";
 
 if (formatCurrency (2095) === "20.95") 
     console.log ("passed");
