@@ -1,4 +1,4 @@
-import {cart, removeFromCart} from "../data/cart.js";
+import {cart, removeFromCart, updateDeliveryOption} from "../data/cart.js";
 import {products} from "../data/products.js";
 import formatCurrency from "./Utils/money.js";
 import {hello} from "https://unpkg.com/supersimpledev@1.0.1/hello.esm.js"; 
@@ -39,7 +39,7 @@ cart.forEach ((cartItem) => {
     cartSummaryHTML += `
     <div class="cart-item-container 
         js-cart-item-container-${matchingProduct.id}">
-        <div class="delivery-date">
+        <div class="delivery-date js-delivery-date">
             Delivery date: ${dateString}
         </div>
 
@@ -91,11 +91,13 @@ function deliveryOptionsHTML (matchingProduct, cartItem) {
         const isChecked = deliveryOption.id === cartItem.deliveryOptionId;
 
         html += `
-        <div class="delivery-option">
+        <div class="delivery-option js-delivery-option">
             <input type="radio"
             ${(isChecked) ? "checked" : ""}
             class="delivery-option-input"
-            name="delivery-option-${matchingProduct.id}">
+            name="delivery-option-${matchingProduct.id}"
+            data-product-id = "${matchingProduct.id}"
+            data-delivery-option-id = "${deliveryOption.id}">
             <div>
                 <div class="delivery-option-date">
                     ${dateString}
@@ -124,3 +126,27 @@ document.querySelectorAll (".js-delete-link")
             container.remove();
         }); 
 });
+
+
+document.querySelector(".js-order-summary")
+    .addEventListener ("change", (event) => {
+        const input = event.target;
+        if (!input.classList.contains ("delivery-option-input")) return;
+        const productId = input.dataset.productId;
+        const deliveryOptionId = input.dataset.deliveryOptionId;
+
+        updateDeliveryOption(productId, deliveryOptionId);
+
+        const deliveryOption = deliveryOptions.find (option => option.id === deliveryOptionId);
+        if (!deliveryOption) {
+            console.error("No delivery option found for id:", deliveryOptionId);
+            return; // Prevents error if data attribute is wrong
+        }
+        const today = dayjs();
+        const newDate = today.add(deliveryOption.deliveryDays, 'days').format('dddd, MMMM D');
+
+        const container = document.querySelector(`.js-cart-item-container-${productId}`);
+        if (container) {
+            container.querySelector(".js-delivery-date").textContent = `Delivery date: ${newDate}`;
+        }
+    });

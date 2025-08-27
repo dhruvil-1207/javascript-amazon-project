@@ -55,3 +55,14 @@ export function removeFromCart (productId) {
 
     saveToStorage();
 }
+
+export function updateDeliveryOption(productId, deliveryOptionId) {
+    let matchingItem  = cart.find(p => p.productId === productId);
+    if (!matchingItem) {
+        console.error(`No cart item found with productId: ${productId}`);
+        return;  // Prevent further error
+    }
+    matchingItem.deliveryOptionId = deliveryOptionId;
+
+    saveToStorage();
+}
