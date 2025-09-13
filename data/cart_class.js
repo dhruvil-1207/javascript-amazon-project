@@ -81,11 +81,3 @@ const cart = new Cart("cart_OOP");
 const businessCart = new Cart("cart_business");
 
 
-
-
-console.log (cart);
-console.log (businessCart);
-console.log (businessCart instanceof Cart);
-
-
-
