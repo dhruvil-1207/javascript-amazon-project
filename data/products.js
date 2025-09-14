@@ -95,7 +95,6 @@ export function loadProducts(func) {
   xhr.send();
 }
 
-loadProducts();
 
 // export const products = [
 //   {
