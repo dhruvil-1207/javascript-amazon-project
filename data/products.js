@@ -45,6 +45,33 @@ class Clothing extends Product {
   }
 }
 
+// const date = new Date();
+// console.log(date);
+// console.log (date.toLocaleTimeString());
+
+// console.log (this);
+
+// consst object2 = {
+//   a: 2, 
+//   b: this.a // while creating this object, this cant be used as the object is not created yet so this has nothing to point to
+// };
+
+// function logThis() {
+//   console.log(this);
+// }
+// logThis();
+// logThis.call("hello"); // this is a parameter for this 
+
+// // arrow functions dont change the value of this
+
+// const object3 = {
+//   method: () => {
+//     console.log(this); // they do not have their own this, they use the this from the surrounding context
+//     // so here this is undefined
+//   }
+// }
+
+// object3.method();
 
 export const products = [
   {
