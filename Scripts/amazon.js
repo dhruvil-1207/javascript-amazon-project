@@ -45,6 +45,8 @@ products.forEach ((product) => {
             </select>
           </div>
 
+          ${product.extraInfoHTML()} // this is called polymorphism, we dont know which class this is being called for
+
           <div class="product-spacer"></div>
 
           <div class="added-to-cart">
