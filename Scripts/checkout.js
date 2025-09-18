@@ -6,32 +6,75 @@ import {loadCart} from "../data/cart.js";
 // import "../data/backend_practice.js";
 
 
-Promise.all([
-  loadProductsFetch(),
+async function loadPage() { // async makes a function to return a promise
+  try {
+    // Load products and cart in parallel using Promise.all with await
+    const values = await Promise.all([
+      loadProductsFetch(), // Returns a promise
+      // await makes the function wait until the promise is resolved
+      // await funtion has to be inside an async, that too as its inital outer function
+      new Promise((resolve) => {
+        loadCart(() => {
+          resolve("value3");
+        });
+      })
+    ]);
 
-  new Promise ((resolve) => {
-    loadCart(() => {
-      resolve();
-    });
-  })
-
-]).then((values) => {
-    // console.log (values);
+    // console.log(values); // ["products data", "cart loaded"]
+    
+    // Render summaries after both operations complete
     renderOrderSummary();
     renderPaymentSummary();
-  });
+    
+  } catch (error) {
+    console.error("Error loading page:", error);
+  }
+}
+
+// async function loadPage() {
+
+//   await loadProductsFetch();
+
+//   const value = await new Promise ((resolve) => {
+//     loadCart(() => {
+//       resolve("value3");
+//     });
+//   });
+
+//     renderOrderSummary();
+//     renderPaymentSummary();
+
+// }
+
+loadPage();
+
+// Load products and cart in parallel, then render summaries
+// Promise.all([
+//   loadProductsFetch(), // this wil return a promisee, so we can use it in promise.all()
+
+//   new Promise ((resolve) => {
+//     loadCart(() => {
+//       resolve();
+//     });
+//   })
+
+// ]).then((values) => {
+//     // console.log (values);
+//     renderOrderSummary();
+//     renderPaymentSummary();
+//   });
 
 
-
+// promises
 // new Promise ((resolve) => {
-//   // console.log ("first step");
+//   console.log ("first step");
 //   loadProducts(() => {
-//     // console.log ("second step");
+//    console.log ("second step");
 //     resolve("value1"); 
 //   })
 
 // }).then ((value) => {
-//   // console.log ("next step");
+//   console.log ("next step");
 //   console.log (value);
 //   return new Promise ((resolve) => {
 //     loadCart(() => {
@@ -44,6 +87,7 @@ Promise.all([
 //   renderPaymentSummary();
 //   });
 
+// callbacks hell
 // loadProducts(() => {
 //   loadCart(() => {
 //     renderOrderSummary();
