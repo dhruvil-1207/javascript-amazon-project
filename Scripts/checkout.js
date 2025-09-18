@@ -8,13 +8,17 @@ import {loadCart} from "../data/cart.js";
 
 async function loadPage() { // async makes a function to return a promise
   try {
+
+    // throw "error1"; // it will throw error and will directly go to the catch part so the statements of try below this wont be executed..
+
     // Load products and cart in parallel using Promise.all with await
     const values = await Promise.all([
       loadProductsFetch(), // Returns a promise
       // await makes the function wait until the promise is resolved
       // await funtion has to be inside an async, that too as its inital outer function
-      new Promise((resolve) => {
+      new Promise((resolve, reject) => {
         loadCart(() => {
+          // reject("error3");
           resolve("value3");
         });
       })

@@ -82,16 +82,19 @@ export function loadProductsFetch() {
     return response.json();
   }).then ((productsData) => {
     products = productsData.map ((productDetails) => {
-    if (productDetails.type === "clothing") {
-      return new Clothing (productDetails);
-    }
-    return new Product (productDetails);
+      if (productDetails.type === "clothing") {
+        return new Clothing (productDetails);
+      }
+      return new Product (productDetails);
     });
 
     console.log ("load products");
+  }).catch ((error) => {
+    console.log ("unexpected error");
   });
   return promise;
 }
+
 
 // loadProductsFetch().then(() => {
 //   console.log ("next step");
@@ -112,9 +115,14 @@ export function loadProducts(func) {
     func();
   });
 
+  xhr.addEventListener ("error", (error) => {
+    console.log ("unexpected error");
+  })
+
   xhr.open ("GET", "https://supersimplebackend.dev/products");
   xhr.send();
 }
+
 
 
 // export const products = [
